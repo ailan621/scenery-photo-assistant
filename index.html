@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-page-node-id="HSWbT54jXrWuoU2xlqtmoS">
+<head data-page-node-id="9A4FF9FeHMgm1dJCFcAvvb">
+<meta charset="UTF-8" data-page-node-id="yucJFsoL5rysMU4yzCMyBt">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" data-page-node-id="0bbphVlAKEBnEDsaZEQks1">
+<title>风景拍摄与视频优化助手</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: "PingFang SC", "Microsoft YaHei", -apple-system, sans-serif;
+    color: #1f2937; background: #f6f8fb; min-height: 100vh;
+  }
+  .hero {
+    position: relative; padding: 90px 24px 70px; text-align: center;
+    background: linear-gradient(160deg, #0f2b46 0%, #1d4e6b 45%, #3d7ea6 80%, #7fb5cf 100%);
+    color: #fff; overflow: hidden;
+  }
+  .hero::after {
+    content: ""; position: absolute; left: 0; right: 0; bottom: -2px; height: 90px;
+    background: #f6f8fb;
+    clip-path: polygon(0 100%, 100% 100%, 100% 40%, 62% 70%, 30% 30%, 0 75%);
+  }
+  .hero h1 { font-size: 40px; letter-spacing: 2px; margin-bottom: 16px; font-weight: 700; }
+  .hero p.sub { font-size: 17px; opacity: .92; max-width: 560px; margin: 0 auto 34px; line-height: 1.8; }
+  .btn-chat {
+    display: inline-block; padding: 14px 44px; font-size: 17px; font-weight: 600;
+    color: #0f2b46; background: #ffd166; border: none; border-radius: 999px;
+    cursor: pointer; box-shadow: 0 6px 20px rgba(0,0,0,.25); transition: transform .15s, box-shadow .15s;
+  }
+  .btn-chat:hover { transform: translateY(-2px); box-shadow: 0 10px 26px rgba(0,0,0,.3); }
+  .features {
+    max-width: 960px; margin: 20px auto 60px; padding: 0 24px;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px;
+  }
+  .card {
+    background: #fff; border-radius: 16px; padding: 28px 24px;
+    box-shadow: 0 4px 16px rgba(15,43,70,.06); border: 1px solid #eef2f6;
+  }
+  .card .emoji { font-size: 34px; margin-bottom: 14px; }
+  .card h3 { font-size: 18px; margin-bottom: 10px; color: #0f2b46; }
+  .card p { font-size: 14px; line-height: 1.9; color: #5b6b7b; }
+  .score-bar { display: flex; gap: 6px; margin-top: 12px; }
+  .score-bar span {
+    flex: 1; text-align: center; font-size: 12px; padding: 6px 2px;
+    background: #f0f6fb; border-radius: 8px; color: #35648c;
+  }
+  footer { text-align: center; padding: 26px 16px 34px; font-size: 13px; color: #9aa7b3; }
+  footer a { color: #3d7ea6; text-decoration: none; }
+  @media (max-width: 520px) { .hero h1 { font-size: 30px; } .hero { padding: 64px 18px 56px; } }
+</style>
+</head>
+<body data-page-node-id="a17tuj2Tx7MWhgZ8k1yJDF">
+
+<section class="hero" data-page-node-id="uRugj2Hj4AbJirMmtnFGbc">
+  <h1 data-page-node-id="mPXEVvzLPkpd4rVwUcwrGR">🏔️ 风景拍摄与视频优化助手</h1>
+  <p class="sub" data-page-node-id="QahHIcbAbiRwqFwubHGGGa">
+    精通风光摄影的老玩家，拍了多年山川湖海。<br data-page-node-id="DdSFMasNcGpvjTPLCGjgU1">
+    拍摄咨询、照片打分、视频运营，直接问它就行。
+  </p>
+  <button class="btn-chat" id="chatBtn" onclick="openChat()" data-page-node-id="ZILl4ZnLWMdiAUEHLGjJJz">💬 开始对话</button>
+</section>
+
+<div class="features" data-page-node-id="DGWJrvAP6yFqEpYsE87ICv">
+  <div class="card" data-page-node-id="V8Hd3h1vo5bchajv1FiYFK">
+    <div class="emoji" data-page-node-id="Ehb6uUqQ0J3FOMF1TExdvR">📷</div>
+    <h3 data-page-node-id="hRVPXJvVb4QwQsUgpiPVrD">拍摄咨询</h3>
+    <p data-page-node-id="akkrAoRTxKYJBuN4sg65KQ">问「日出怎么拍」「星空怎么拍」，直接给到最佳时间、机位、参数和避坑要点，手机相机都照顾。</p>
+  </div>
+  <div class="card" data-page-node-id="nXNNT718CkYWFXp5HE9XJZ">
+    <div class="emoji" data-page-node-id="IkQQizRm7absxD7etBomPk">🖼️</div>
+    <h3 data-page-node-id="BBFecXRAbD1gpplMgZvpUR">照片打分</h3>
+    <p data-page-node-id="7pIBR0PlPfpBYhxhKd2yay">发一张照片说「打个分」，十分制严格评分，逐维度说明理由，还给最能提分的改进点。</p>
+    <div class="score-bar" data-page-node-id="f6FNnYsCmUpKvleDpUt6St"><span data-page-node-id="i3TWFAxt10fxGBYXfGUOM2">构图3</span><span data-page-node-id="lHbC8g3KJdYxJt9r8lC1jv">光影2</span><span data-page-node-id="A3497h3qRR7WQzR67vD4Fc">色彩2</span><span data-page-node-id="wAfjekeU5rQUXiu4CfSLCk">主体2</span><span data-page-node-id="happGqJiH13EMP98G0qVbs">清晰1</span></div>
+  </div>
+  <div class="card" data-page-node-id="LZIgU5C11vNfkwnxgkd1Vr">
+    <div class="emoji" data-page-node-id="TcEvBK6mVf3qhlhXTMx207">🎬</div>
+    <h3 data-page-node-id="MX4nYyRvya9CGOiQHnH08W">视频与发布</h3>
+    <p data-page-node-id="FUFVbcS4dKDjdTAkAVxHwX">拍风景视频怎么剪、几点发流量好、带什么标签——覆盖日出、星空、露营、公路等 20+ 场景。</p>
+  </div>
+</div>
+
+<footer data-page-node-id="dIOk9mpr4CmWkigPnbIMkk">
+  Powered by Coze ·
+  <a href="https://www.coze.cn/store/agent/7681975188829159474?bot_id=true" target="_blank" data-page-node-id="6PDpHTKxthWwmC1xleRbDr">也可以在扣子商店打开</a>
+</footer>
+
+<!-- 扣子 Web SDK（官方地址） -->
+<script src="https://sf-cdn.coze.cn/obj/unpkg/v1/platform/dist/web/index.js"></script>
+<script>
+  var STORE_URL = 'https://www.coze.cn/store/agent/7681975188829159474?bot_id=true';
+
+  // 初始化聊天组件（加载失败时自动降级为跳转商店链接）
+  var sdkReady = false;
+  try {
+    if (typeof CozeWebSDK !== 'undefined') {
+      new CozeWebSDK.WebChatClient({
+        config: { bot_id: '7681975188829159474' },
+        auth: {
+          type: 'token',
+          token: 'pat_BFvxTjSaIHZkOnmATBq7tFLpHaAByld6JcILtBfUtNhb1CsPN2raFe8jAmosY11Z',
+          onAuthSuccess: function () { sdkReady = true; }
+        },
+        ui: {
+          basePanel: { layout: 'float', windowWidth: 420 },
+          assistantSettings: { name: '风景拍摄与视频优化助手' },
+          floatButton: { offset: { right: 20, bottom: 24 } },
+          footer: { isNeed: false }
+        }
+      });
+      sdkReady = true;
+    }
+  } catch (e) { console.warn('SDK init failed', e); }
+
+  function findBubble() {
+    return document.querySelector('[class*="float-btn"], [class*="floatBtn"], .coze-float-btn, iframe[class*="float"]');
+  }
+  function openChat() {
+    var bubble = findBubble();
+    if (bubble && sdkReady) {
+      bubble.click();
+      return;
+    }
+    // SDK 未加载成功 → 跳转扣子商店（一样可以对话）
+    window.open(STORE_URL, '_blank');
+  }
+</script>
+</body>
+</html>
