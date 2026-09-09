@@ -7,9 +7,7 @@
 <style>
   :root {
     --ink: #16181d;
-    --sub: #6f7680;
     --faint: #9aa1ab;
-    --line: #e7e7e2;
     --bg: #fcfcfa;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -18,83 +16,41 @@
     background: var(--bg); color: var(--ink);
     -webkit-font-smoothing: antialiased;
   }
-  .wrap { max-width: 680px; margin: 0 auto; padding: 0 24px; }
-
-  header {
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 22px 0; border-bottom: 1px solid var(--line);
+  .wrap {
+    max-width: 680px; width: 100%; margin: 0 auto; padding: 0 28px;
+    min-height: 100vh; display: flex; flex-direction: column;
   }
-  .brand { font-size: 14px; font-weight: 600; letter-spacing: 1px; }
-  .top-link {
-    font-size: 14px; color: var(--ink); background: none; border: none;
-    cursor: pointer; padding: 0; border-bottom: 1px solid var(--faint); padding-bottom: 2px;
-  }
-  .top-link:hover { border-bottom-color: var(--ink); }
-
-  .intro { padding: 92px 0 60px; }
-  h1 { font-size: 34px; line-height: 1.4; font-weight: 600; letter-spacing: .5px; margin-bottom: 32px; }
+  .spacer { flex: 1; }
+  h1 { font-size: 30px; line-height: 1.45; font-weight: 600; letter-spacing: .5px; margin-bottom: 36px; }
   .btn-main {
-    display: inline-block; font-size: 15px; font-weight: 500;
+    display: inline-block; align-self: flex-start;
+    font-size: 15px; font-weight: 500;
     color: #fff; background: var(--ink); border: none; border-radius: 8px;
     padding: 12px 30px; cursor: pointer; transition: background .15s;
   }
   .btn-main:hover { background: #31353c; }
-
-  .list { padding-bottom: 72px; }
-  .row {
-    display: flex; gap: 32px;
-    padding: 24px 0; border-top: 1px solid var(--line);
-  }
-  .row h3 { flex: 0 0 6em; font-size: 14px; font-weight: 600; padding-top: 3px; }
-  .row p { font-size: 14px; line-height: 2; color: var(--sub); }
-
-  footer {
-    padding: 26px 0 44px; border-top: 1px solid var(--line);
-    font-size: 12.5px; color: var(--faint);
-  }
+  .meta { margin-top: 60px; font-size: 13px; letter-spacing: .5px; color: var(--faint); }
+  footer { margin-top: 14px; padding-bottom: 34px; font-size: 12px; color: var(--faint); }
   footer a { color: inherit; text-decoration: underline; text-underline-offset: 3px; }
   footer a:hover { color: var(--ink); }
-
   @media (max-width: 520px) {
-    .intro { padding: 60px 0 44px; }
-    h1 { font-size: 26px; }
-    .row { flex-direction: column; gap: 8px; padding: 20px 0; }
-    .btn-main { padding: 11px 26px; }
+    h1 { font-size: 25px; margin-bottom: 30px; }
+    .meta { margin-top: 48px; }
   }
 </style>
 </head>
 <body>
 
-<div class="wrap">
-  <header>
-    <span class="brand">风景拍摄助手</span>
-    <button class="top-link" onclick="openChat()">开始对话</button>
-  </header>
-
-  <section class="intro">
-    <h1>风景拍摄与视频优化助手</h1>
-    <button class="btn-main" id="chatBtn" onclick="openChat()">开始对话</button>
-  </section>
-
-  <section class="list">
-    <div class="row">
-      <h3>拍摄咨询</h3>
-      <p>问「日出怎么拍」「星空怎么拍」，直接给最佳时间、机位、参数和避坑要点，手机相机都照顾。</p>
-    </div>
-    <div class="row">
-      <h3>照片打分</h3>
-      <p>发一张照片说「打个分」，十分制严格评分，逐维度说明理由，给最能提分的改进点。</p>
-    </div>
-    <div class="row">
-      <h3>视频与发布</h3>
-      <p>怎么剪、几点发、带什么标签——覆盖日出、星空、露营、公路等 20 多个场景。</p>
-    </div>
-  </section>
-
+<main class="wrap">
+  <div class="spacer"></div>
+  <h1>风景拍摄与视频优化助手</h1>
+  <button class="btn-main" id="chatBtn" onclick="openChat()">开始对话</button>
+  <p class="meta">拍摄咨询 · 照片打分 · 视频与发布建议</p>
+  <div class="spacer"></div>
   <footer>
     Powered by Coze · <a href="https://www.coze.cn/store/agent/7681975188829159474?bot_id=true" target="_blank">在扣子商店打开</a>
   </footer>
-</div>
+</main>
 
 <script>
   var STORE_URL = 'https://www.coze.cn/store/agent/7681975188829159474?bot_id=true';
