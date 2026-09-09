@@ -46,7 +46,13 @@
   }
   footer { text-align: center; padding: 26px 16px 34px; font-size: 13px; color: #9aa7b3; }
   footer a { color: #3d7ea6; text-decoration: none; }
-  @media (max-width: 520px) { .hero h1 { font-size: 30px; } .hero { padding: 64px 18px 56px; } }
+  @media (max-width: 520px) {
+    .hero h1 { font-size: 30px; }
+    .hero { padding: 64px 18px 56px; }
+    .btn-chat { padding: 12px 36px; font-size: 16px; }
+    .card { padding: 22px 18px; }
+    .card p { font-size: 13px; }
+  }
 </style>
 </head>
 <body>
@@ -84,46 +90,87 @@
   <a href="https://www.coze.cn/store/agent/7681975188829159474?bot_id=true" target="_blank">在扣子商店打开（需登录扣子）</a>
 </footer>
 
-<!-- 扣子 Chat SDK（官方发布页生成的安装地址，2026-09-07 验证可用） -->
-<script src="https://lf-cdn.coze.cn/obj/unpkg/flow-platform/chat-app-sdk/1.2.0-beta.19/libs/cn/index.js"></script>
 <script>
   var STORE_URL = 'https://www.coze.cn/store/agent/7681975188829159474?bot_id=true';
-  var sdkReady = false;
+  var IS_MOBILE = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
 
+  /* 打开聊天：直接调 SDK 实例自带的 showChatBot() API。
+     （SDK 气泡按钮的 DOM 类名是构建哈希，按类名永远找不到，这就是之前
+     「聊天气泡未找到」弹窗的原因；SDK 源码确认实例上有 showChatBot/hideChatBot。） */
+  function openChat() {
+    var client = window.chatClient;
+    try {
+      if (client && typeof client.showChatBot === 'function') {
+        client.showChatBot();
+        return;
+      }
+    } catch (e) { console.warn('showChatBot failed', e); }
+
+    /* 兜底1：按屏幕位置点右下角悬浮气泡（不依赖类名） */
+    function bubbleAt() {
+      var el = document.elementFromPoint(window.innerWidth - 28, window.innerHeight - 44);
+      return (el && el.tagName !== 'HTML' && el.tagName !== 'BODY') ? el : null;
+    }
+    var b = bubbleAt();
+    if (b) { b.click(); return; }
+
+    /* 兜底2：SDK 可能仍在加载，轮询最多约 6 秒 */
+    var done = false, tries = 0;
+    var timer = setInterval(function () {
+      tries++;
+      var c2 = window.chatClient;
+      try {
+        if (c2 && typeof c2.showChatBot === 'function') {
+          clearInterval(timer); done = true; c2.showChatBot(); return;
+        }
+      } catch (e) {}
+      var el2 = bubbleAt();
+      if (el2) { clearInterval(timer); done = true; el2.click(); return; }
+      if (tries >= 40) clearInterval(timer);
+    }, 150);
+
+    /* 兜底3：始终失败则引导去扣子商店 */
+    setTimeout(function () {
+      if (done || bubbleAt()) return;
+      var c3 = window.chatClient;
+      if (c3 && typeof c3.showChatBot === 'function') { try { c3.showChatBot(); } catch (e) {} return; }
+      if (confirm('聊天组件加载较慢或失败。\n\n点击「确定」在扣子商店打开对话（需登录扣子账号）。')) {
+        window.open(STORE_URL, '_blank');
+      }
+    }, 6000);
+  }
+</script>
+
+<!-- 扣子 Chat SDK（官方发布页生成的安装地址） -->
+<script src="https://lf-cdn.coze.cn/obj/unpkg/flow-platform/chat-app-sdk/1.2.0-beta.19/libs/cn/index.js"></script>
+<script>
   try {
     if (typeof CozeWebSDK !== 'undefined') {
-      new CozeWebSDK.WebChatClient({
+      window.chatClient = new CozeWebSDK.WebChatClient({
         config: {
           type: 'bot',
           bot_id: '7681975188829159474'
         },
         auth: {
           type: 'token',
+          /* 注意：静态网页方案下令牌必须放前端，属官方 SDK 的既定用法；
+             该令牌仅为本演示页专用，有效期至 2026-10-07，到期自动失效。 */
           token: 'pat_M4lR0Llh9fY7fa5SoaGtRZHvG7wLx7D316jgHmJZPdpI0YRU6ppjKMHR5GGHvU0C',
           onRefreshToken: function () { return 'pat_M4lR0Llh9fY7fa5SoaGtRZHvG7wLx7D316jgHmJZPdpI0YRU6ppjKMHR5GGHvU0C'; }
         },
         userInfo: { id: 'visitor', nickname: '访客' },
         ui: {
-          base: { layout: 'pc', lang: 'zh-CN', zIndex: 9999 },
+          base: { layout: IS_MOBILE ? 'mobile' : 'pc', lang: 'zh-CN', zIndex: 9999 },
           header: { isShow: true, isNeedClose: true },
           asstBtn: { isNeed: true },
           footer: { isShow: true, expressionText: 'Powered by Coze' },
-          chatBot: { title: '风景拍摄与视频优化助手', width: 420 }
+          chatBot: IS_MOBILE
+            ? { title: '风景拍摄与视频优化助手' }
+            : { title: '风景拍摄与视频优化助手', width: 420 }
         }
       });
-      sdkReady = true;
     }
   } catch (e) { console.warn('SDK init failed', e); }
-
-  function openChat() {
-    if (!sdkReady) {
-      alert('聊天组件加载失败，请刷新页面重试；也可以通过页面底部的链接在扣子商店打开（需登录扣子）。');
-      return;
-    }
-    var bubble = document.querySelector('[class*="asst-btn"], [class*="asstBtn"], [class*="float-btn"], [id*="coze"]');
-    if (bubble) { bubble.click(); }
-    else { alert('聊天气泡未找到，请刷新页面重试。'); }
-  }
 </script>
 </body>
 </html>
