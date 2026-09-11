@@ -72,16 +72,22 @@
   </footer>
 </main>
 
-<!-- 访问统计（不蒜子，免费无注册；加载失败自动隐藏，不影响页面） -->
+<!-- 访问统计（不蒜子，免费无注册；20 秒内拿不到数据就保持隐藏，不影响页面） -->
 <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 <script>
-  setTimeout(function () {
-    var box = document.getElementById('siteStats');
-    var v = document.getElementById('busuanzi_value_site_pv');
-    if (box && v && /^\d+$/.test((v.textContent || '').trim())) {
-      box.style.display = '';
-    }
-  }, 4000);
+  (function () {
+    var tries = 0;
+    var timer = setInterval(function () {
+      tries++;
+      var box = document.getElementById('siteStats');
+      var v = document.getElementById('busuanzi_value_site_pv');
+      if (box && v && /^\d+$/.test((v.textContent || '').trim())) {
+        box.style.display = '';
+        clearInterval(timer);
+      }
+      if (tries >= 20) clearInterval(timer);
+    }, 1000);
+  })();
 </script>
 
 <script>
