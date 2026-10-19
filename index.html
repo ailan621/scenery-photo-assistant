@@ -91,86 +91,10 @@
 </script>
 
 <script>
-  var STORE_URL = 'https://www.coze.cn/store/agent/7681975188829159474?bot_id=true';
-  var IS_MOBILE = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
-
-  /* 打开聊天：直接调 SDK 实例自带的 showChatBot() API。
-     （SDK 气泡按钮的 DOM 类名是构建哈希，按类名永远找不到，故不依赖气泡。） */
+  /* 打开聊天：跳转到独立对话页，由自建接口代理转发，网页端不承载任何访问令牌。 */
   function openChat() {
-    var client = window.chatClient;
-    try {
-      if (client && typeof client.showChatBot === 'function') {
-        client.showChatBot();
-        return;
-      }
-    } catch (e) { console.warn('showChatBot failed', e); }
-
-    /* 兜底1：按屏幕位置点右下角悬浮气泡（不依赖类名） */
-    function bubbleAt() {
-      var el = document.elementFromPoint(window.innerWidth - 28, window.innerHeight - 44);
-      return (el && el.tagName !== 'HTML' && el.tagName !== 'BODY') ? el : null;
-    }
-    var b = bubbleAt();
-    if (b) { b.click(); return; }
-
-    /* 兜底2：SDK 可能仍在加载，轮询最多约 6 秒 */
-    var done = false, tries = 0;
-    var timer = setInterval(function () {
-      tries++;
-      var c2 = window.chatClient;
-      try {
-        if (c2 && typeof c2.showChatBot === 'function') {
-          clearInterval(timer); done = true; c2.showChatBot(); return;
-        }
-      } catch (e) {}
-      var el2 = bubbleAt();
-      if (el2) { clearInterval(timer); done = true; el2.click(); return; }
-      if (tries >= 40) clearInterval(timer);
-    }, 150);
-
-    /* 兜底3：始终失败则引导去扣子商店 */
-    setTimeout(function () {
-      if (done || bubbleAt()) return;
-      var c3 = window.chatClient;
-      if (c3 && typeof c3.showChatBot === 'function') { try { c3.showChatBot(); } catch (e) {} return; }
-      if (confirm('聊天组件加载较慢或失败。\n\n点击「确定」在扣子商店打开对话（需登录扣子账号）。')) {
-        window.open(STORE_URL, '_blank');
-      }
-    }, 6000);
+    window.location.href = './chat.html';
   }
-</script>
-
-<!-- 访问令牌（单独文件，更换令牌只需替换这一个文件） -->
-<script src="./app-config.js"></script>
-
-<!-- 扣子 Chat SDK（官方发布页生成的安装地址） -->
-<script src="https://lf-cdn.coze.cn/obj/unpkg/flow-platform/chat-app-sdk/1.2.0-beta.19/libs/cn/index.js"></script>
-<script>
-  try {
-    if (typeof CozeWebSDK !== 'undefined') {
-      window.chatClient = new CozeWebSDK.WebChatClient({
-        config: {
-          type: 'bot',
-          bot_id: '7681975188829159474'
-        },
-        auth: {
-          type: 'token',
-          token: window.APP_CONFIG.cozeToken,
-          onRefreshToken: function () { return window.APP_CONFIG.cozeToken; }
-        },
-        userInfo: { id: 'visitor', nickname: '访客' },
-        ui: {
-          base: { layout: IS_MOBILE ? 'mobile' : 'pc', lang: 'zh-CN', zIndex: 9999 },
-          header: { isShow: true, isNeedClose: true },
-          asstBtn: { isNeed: true },
-          footer: { isShow: true, expressionText: 'Powered by Coze' },
-          chatBot: IS_MOBILE
-            ? { title: '风景拍摄与视频优化助手' }
-            : { title: '风景拍摄与视频优化助手', width: 420 }
-        }
-      });
-    }
-  } catch (e) { console.warn('SDK init failed', e); }
 </script>
 </body>
 </html>
