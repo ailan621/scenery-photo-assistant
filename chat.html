@@ -353,10 +353,13 @@
         paint(d.content);
       } else if (ev === 'conversation.message.completed' && d.type === 'answer') {
         if (!acc && d.content) paint(d.content);
-      } else if (ev === 'conversation.chat.failed') {
-        fail('生成失败，稍后再试一次。');
-      } else if (d.status === 'failed') {
-        fail('生成失败，稍后再试一次。');
+      } else if (ev === 'conversation.chat.failed' || d.status === 'failed') {
+        var code = (d.last_error && d.last_error.code) || 0;
+        if (code === 4028) {
+          fail('智能体的调用额度已经用完，暂时回答不了。等额度刷新或升级之后就能继续用。');
+        } else {
+          fail('生成失败，稍后再试一次。');
+        }
       }
     }
   }
